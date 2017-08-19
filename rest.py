@@ -15,13 +15,10 @@ def get_chat_id(response):
     return response.get('result')[0].get('message').get('chat').get('id')
 
 def main():
-    old_messages = []
     offset = 0 
     while True:
         # we have new messages
         response = requests.post(url + 'getUpdates', data=dict(offset=offset+1,timeout=60),timeout=None).json()
-        if not response['ok']:
-            continue
         offset = response.get('result')[-1].get('update_id')
         send_message('You said: {}'.format(get_messages(response)[-1]),get_chat_id(response))
 
