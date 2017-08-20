@@ -1,8 +1,15 @@
 import requests
 import time
 import yaml
+import random
 
 REPEAT = False
+items = ['Was sopl das', 'Ohhhh gg', 'Du hast Masse am Ausgang',
+        'Wie willst du das ohne TL subwoofer beurteilen?',
+        'Bei Vapenation vielleicht, aber hier nicht',
+        'Nur 128 kBit/s mp3...', 'Steffi approves', 'Many coins, much worth',
+        'Was wuerde Elon Musk dazu sagen?',
+        'Alles loesbar mit Elektromobilitaet']
 
 with open('config.yaml','r') as yaml_file:
     cfg = yaml.load(yaml_file)
@@ -18,9 +25,10 @@ except KeyError:
 telegram_url = 'https://api.telegram.org/bot' + bot_id + ':' + telegram_key + '/'
 weather_url = 'http://api.openweathermap.org/data/2.5/'
 
-def send_message(msg,parse_mode=None):
+def send_message(msg,parse_mode=None,reply_to_message_id=None):
     r = requests.post(telegram_url + 'sendMessage', 
-            data=dict(chat_id=chat_id,text=msg,parse_mode=parse_mode))
+            data=dict(chat_id=chat_id,text=msg,parse_mode=parse_mode,
+                reply_to_message_id=reply_to_message_id))
     print(r.json())
 
 def send_picture(url):
@@ -47,6 +55,11 @@ def weather_request(location,mode=None):
         return r.json()
     else:
         return r.content
+
+def get_last_msg_id(response):
+    msg_id = response.get('result')[-1]['message']['message_id']
+    print('msg_id: {}'.format(msg_id))
+    return msg_id
 
 def format_weather(json_data):
     location = json_data['name'].encode('utf-8')
@@ -95,6 +108,10 @@ def main():
             send_picture(get_weather_pic_url(location))
             send_message(format_weather(json_weather),'HTML')
             in_answer = False
+        msg_id = get_last_msg_id(response)
+        if msg_id % random.randrange(4,8,1) == 0:
+            send_message(items[random.randrange(len(items))],
+                    reply_to_message_id=msg_id)
 
 if __name__ == '__main__':
     try:
