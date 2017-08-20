@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import requests
 import time
 import yaml
@@ -8,8 +10,8 @@ items = ['Was sopl das', 'Ohhhh gg', 'Du hast Masse am Ausgang',
         'Wie willst du das ohne TL subwoofer beurteilen?',
         'Bei Vapenation vielleicht, aber hier nicht',
         'Nur 128 kBit/s mp3...', 'Steffi approves', 'Many coins, much worth',
-        'Was wuerde Elon Musk dazu sagen?',
-        'Alles loesbar mit Elektromobilitaet',
+        'Was würde Elon Musk dazu sagen?',
+        'Alles lösbar mit Elektromobilitaet',
         'lopl', 'Wann kaufst du dir ein neues Fully?',
         'Man kann auch ein Handy als Protector benutzen',
         'Kommst du ohne quadratischen Screen überhaupt klar?']
