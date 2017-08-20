@@ -9,7 +9,10 @@ items = ['Was sopl das', 'Ohhhh gg', 'Du hast Masse am Ausgang',
         'Bei Vapenation vielleicht, aber hier nicht',
         'Nur 128 kBit/s mp3...', 'Steffi approves', 'Many coins, much worth',
         'Was wuerde Elon Musk dazu sagen?',
-        'Alles loesbar mit Elektromobilitaet']
+        'Alles loesbar mit Elektromobilitaet',
+        'lopl', 'Wann kaufst du dir ein neues Fully?',
+        'Man kann auch ein Handy als Protector benutzen',
+        'Kommst du ohne quadratischen Screen überhaupt klar?']
 
 with open('config.yaml','r') as yaml_file:
     cfg = yaml.load(yaml_file)
