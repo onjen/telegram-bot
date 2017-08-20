@@ -45,8 +45,14 @@ def get_response(offset, timeout):
                 data=dict(offset=offset,timeout=timeout),timeout=None).json()
     return r
 
-def get_messages(response):
-    return [msg.get('message').get('text') for msg in response.get('result')]
+def get_last_msg(response):
+    msg = response.get('result')[-1]
+    text = msg.get('message').get('text')
+    # check if a text mesage was returned
+    if text:
+        return text
+    else:
+        return None
 
 def get_chat_id(response):
     return response.get('result')[0].get('message').get('chat').get('id')
@@ -94,12 +100,16 @@ def main():
     while True:
         # we have new messages
         response = get_response(offset+1, 60)
+        print(response)
         try:
             offset = response.get('result')[-1].get('update_id')
         except IndexError:
             # long polling timeout, try again
             continue
-        answer = get_messages(response)[-1]
+        answer = get_last_msg(response)
+        # if not a valid text was sent (gif or somethin)
+        if not answer:
+            continue
         print(answer)
         if REPEAT:
             send_message('You said: {}'.format(answer))
