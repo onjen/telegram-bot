@@ -124,7 +124,7 @@ def main():
             send_message(format_weather(json_weather),'HTML')
             in_answer = False
         msg_id = get_last_msg_id(response)
-        if msg_id % random.randrange(4,8,1) == 0 and not answer[0] == ' ':
+        if msg_id % random.randrange(4,8,1) == 0 and not answer[0].isspace():
             send_message(items[random.randrange(len(items))],
                     reply_to_message_id=msg_id)
 
